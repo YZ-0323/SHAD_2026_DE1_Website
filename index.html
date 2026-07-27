@@ -19,6 +19,9 @@
     --muted:#6D6C61;
     --placeholder-bg:#E7E2D3;
     --placeholder-border:#B7B097;
+    --leaf:#5E8C61;
+    --leaf-dark:#3B5E40;
+    --leaf-tint:#E4EBDD;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   body{
@@ -31,50 +34,55 @@
   .voice{font-family:'Fraunces',serif;}
   a{color:inherit;text-decoration:none;}
 
-  /* ---------- reusable: image placeholder ---------- */
+  .grow-bar{
+    height:4px;
+    width:100%;
+    background:linear-gradient(90deg, var(--leaf-dark), var(--leaf) 45%, var(--yellow));
+  }
+
   .img-slot{
     position:relative;
     overflow:hidden;
     background:var(--placeholder-bg);
-    border:1px dashed var(--placeholder-border);
   }
   .img-slot img{
     width:100%;height:100%;object-fit:cover;display:block;
   }
-  .img-slot .slot-label{
-    position:absolute;
-    inset:0;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:13px;
-    letter-spacing:0.04em;
-    color:var(--muted);
-    text-align:center;
-    padding:12px;
-    pointer-events:none;
-  }
 
-  /* ---------- reusable: circle-accent word (signature element) ---------- */
+  /* two-up image band, no captions */
+  .gallery-duo{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:4px;
+    background:var(--line);
+  }
+  .gallery-duo .img-slot{overflow:hidden;}
+  .gallery-duo .img-slot:nth-child(1){aspect-ratio:1472/996;}
+  .gallery-duo .img-slot:nth-child(2){aspect-ratio:1592/1054;}
+
   .accent-word{
     position:relative;
     display:inline-block;
-    z-index:1;
     padding:0 0.15em;
+    isolation:isolate;
   }
   .accent-word::before{
     content:'';
     position:absolute;
     top:50%;left:50%;
-    width:135%;
-    height:150%;
+    width:111%;
+    height:118%;
     transform:translate(-50%,-50%);
-    background:var(--yellow);
+    background:linear-gradient(135deg,rgba(159,197,132,0.42),rgba(94,140,97,0.42));
     border-radius:50%;
     z-index:-1;
   }
+  .accent-word.leaf::before{
+    background:var(--leaf-tint);
+    border:1.5px solid var(--leaf);
+    box-shadow:none;
+  }
 
-  /* ---------- meta row (breadcrumb style, echoes reference slide) ---------- */
   .meta-row{
     display:flex;
     justify-content:space-between;
@@ -86,13 +94,23 @@
     color:var(--muted);
   }
 
-  /* Nav */
   nav{
     display:flex;
     align-items:center;
     justify-content:space-between;
     padding:22px 48px;
     border-bottom:1px solid var(--line);
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .brand-logo{
+    height:46px;
+    width:auto;
+    object-fit:contain;
+    flex-shrink:0;
   }
   .logo{
     font-family:'Fraunces',serif;
@@ -108,10 +126,10 @@
     letter-spacing:0.03em;
     color:var(--muted);
   }
-  .nav-links a:hover{color:var(--ink);}
+  .nav-links a{transition:color .2s ease;}
+  .nav-links a:hover{color:var(--leaf-dark);}
   .nav-icons{display:flex;gap:20px;font-size:15px;color:var(--ink);}
 
-  /* Hero */
   .hero{
     display:grid;
     grid-template-columns:1fr 1.1fr;
@@ -123,15 +141,25 @@
     font-size:12px;
     letter-spacing:0.14em;
     text-transform:uppercase;
-    color:var(--olive);
+    color:var(--leaf-dark);
     font-weight:600;
     margin-bottom:18px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .eyebrow::before{
+    content:'';
+    width:6px;height:6px;
+    border-radius:50%;
+    background:var(--leaf);
+    display:inline-block;
   }
   h1.hero-title{
     font-family:'Fraunces',serif;
     font-weight:700;
     font-size:52px;
-    line-height:1.18;
+    line-height:1.4;
     letter-spacing:-0.01em;
   }
   .hero-copy{
@@ -152,22 +180,21 @@
     border-radius:2px;
     border:1px solid var(--ink);
     cursor:pointer;
-    transition:opacity .2s ease;
+    transition:opacity .2s ease, background .2s ease, border-color .2s ease;
   }
-  .btn:hover{opacity:0.85;}
+  .btn:hover{background:var(--leaf-dark);border-color:var(--leaf-dark);opacity:1;}
   .btn-ghost{
     background:transparent;
     color:var(--ink);
   }
+  .btn-ghost:hover{background:var(--leaf-tint);color:var(--leaf-dark);border-color:var(--leaf);}
   .hero-actions{display:flex;gap:14px;align-items:center;}
 
   .hero-visual{
     border-radius:4px;
-    aspect-ratio:4/5;
+    aspect-ratio:816/550;
   }
-  .hero-visual .slot-label strong{display:block;font-family:'Fraunces',serif;font-size:15px;font-weight:400;margin-bottom:2px;color:var(--ink);}
 
-  /* Values strip */
   .values{
     background:var(--paper);
     border-top:1px solid var(--line);
@@ -184,22 +211,22 @@
     line-height:1.25;
     max-width:280px;
   }
-  .value-item{border-left:1px solid var(--line);padding-left:24px;}
+  .value-item{border-left:2px solid var(--leaf-tint);padding-left:24px;transition:border-color .2s ease;}
+  .value-item:hover{border-left-color:var(--leaf);}
   .value-item .icon{
     width:34px;height:34px;
     margin-bottom:16px;
-    color:var(--olive);
+    color:var(--leaf-dark);
   }
   .value-item h3{font-size:14px;font-weight:600;margin-bottom:8px;}
   .value-item p{font-size:13px;color:var(--muted);line-height:1.6;}
 
-  /* Story */
   .story{
     display:grid;
     grid-template-columns:1fr 1fr;
     gap:0;
   }
-  .story-img{aspect-ratio:1/1;}
+  .story-img{aspect-ratio:1024/510;}
   .story-text{
     padding:72px 64px;
     display:flex;
@@ -221,7 +248,6 @@
     margin-bottom:16px;
   }
 
-  /* Growth stages */
   .stages{
     padding:88px 48px;
     background:var(--cream);
@@ -252,12 +278,15 @@
     background:var(--paper);
     padding:32px 28px;
     position:relative;
+    border-top:3px solid var(--leaf-tint);
+    transition:border-top-color .2s ease;
   }
+  .stage:hover{border-top-color:var(--leaf);}
   .stage:not(:last-child){border-right:1px solid var(--line);}
   .stage .num{
     font-family:'Fraunces',serif;
     font-style:italic;
-    color:var(--olive-dark);
+    color:var(--leaf-dark);
     font-size:14px;
     margin-bottom:14px;
     display:block;
@@ -265,7 +294,6 @@
   .stage h3{font-size:15px;font-weight:600;margin-bottom:8px;}
   .stage p{font-size:13px;color:var(--muted);line-height:1.6;}
 
-  /* Footer */
   footer{
     border-top:1px solid var(--line);
     padding:48px 48px 32px;
@@ -276,12 +304,15 @@
   }
   .footer-cols{display:flex;gap:64px;}
   .footer-col h4{font-size:12px;letter-spacing:0.05em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;}
-  .footer-col a{display:block;font-size:13px;margin-bottom:9px;color:var(--ink);}
+  .footer-col a{display:block;font-size:13px;margin-bottom:9px;color:var(--ink);transition:color .2s ease;}
+  .footer-col a:hover{color:var(--leaf-dark);}
   .footer-bottom{
     text-align:center;
     font-size:12px;
     color:var(--muted);
     padding-top:32px;
+    border-top:1px solid var(--line);
+    margin-top:16px;
   }
 
   @media (max-width: 860px){
@@ -294,6 +325,7 @@
     .values h2{grid-column:1/-1;}
     .story{grid-template-columns:1fr;}
     .story-text{padding:40px 20px;}
+    .gallery-duo{grid-template-columns:1fr;}
     .stage-track{grid-template-columns:1fr;}
     .stage:not(:last-child){border-right:none;border-bottom:1px solid var(--line);}
     footer{flex-direction:column;gap:32px;padding:40px 20px;}
@@ -303,20 +335,23 @@
 </head>
 <body>
 
-  <!-- meta row, echoes the breadcrumb line at the top of the reference slide -->
+  <div class="grow-bar"></div>
+
   <div class="meta-row">
-    <span>input text</span>
-    <span>input text</span>
-    <span>input text</span>
+    <span>Adaptive Fiber Lab</span>
+    <span>Est. 2026</span>
   </div>
 
   <nav>
-    <div class="logo">Continue<span> to Grow</span></div>
+    <div class="brand">
+      <img class="brand-logo" src="assets/logo.png" alt="Continue to Grow logo" onerror="this.style.display='none'">
+      <div class="logo">Continue<span> to Grow</span></div>
+    </div>
     <div class="nav-links">
-      <a href="#">input text</a>
-      <a href="#">input text</a>
-      <a href="#">input text</a>
-      <a href="#">input text</a>
+      <a href="#">Materials</a>
+      <a href="#">Process</a>
+      <a href="#">Journal</a>
+      <a href="#">Contact</a>
     </div>
     <div class="nav-icons">
       <span>⌕</span>
@@ -326,105 +361,113 @@
 
   <section class="hero">
     <div>
-      <div class="eyebrow">input text</div>
-      <h1 class="hero-title">input text <span class="accent-word">input text</span> input text</h1>
-      <p class="hero-copy">input text input text input text input text input text input text input text input text input text input text.</p>
+      <div class="eyebrow">Adaptive · Circular Textiles</div>
+      <h1 class="hero-title">Fabric that adapts to you, and <span class="accent-word">gives back</span> to the earth</h1>
+      <p class="hero-copy">We replace spandex and elastane with lyocell and natural tree rubber — fibers that stretch to fit the body, hold their shape for years, and fully biodegrade at the end of their life.</p>
       <div class="hero-actions">
-        <button class="btn">input text</button>
-        <button class="btn btn-ghost">input text →</button>
+        <button class="btn">Explore the materials</button>
+        <button class="btn btn-ghost">How it works →</button>
       </div>
     </div>
-    <!-- image slot 1: swap in "1.png" once the file is ready, same folder as this HTML -->
     <div class="hero-visual img-slot">
-      <img src="1.png" alt="input image 1" onerror="this.style.display='none'">
-      <div class="slot-label"><strong>input text</strong>input text · 1.png</div>
+      <img src="assets/1.png" alt="Lyocell knit fabric" onerror="this.style.display='none'">
     </div>
   </section>
 
   <section class="values">
-    <h2>input text <span class="accent-word">input text</span></h2>
+    <h2>Two problems, <span class="accent-word">one fiber system</span></h2>
     <div class="value-item">
       <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3C8 6 5 10 5 14a7 7 0 0014 0c0-4-3-8-7-11z"/></svg>
-      <h3>input text</h3>
-      <p>input text input text input text input text.</p>
+      <h3>Grows with the body</h3>
+      <p>Lyocell's crystalline structure absorbs 50% more moisture than cotton, breathing and cooling as conditions change.</p>
     </div>
     <div class="value-item">
       <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 12a8 8 0 0114-5.3M20 12a8 8 0 01-14 5.3M4 6v4h4M20 18v-4h-4"/></svg>
-      <h3>input text</h3>
-      <p>input text input text input text input text.</p>
+      <h3>Shape memory, without spandex</h3>
+      <p>Natural tree rubber recovers its form after stretching, replacing petroleum-based elastane with a renewable alternative.</p>
     </div>
     <div class="value-item">
       <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 15l4-4 3 3 5-5 4 4"/></svg>
-      <h3>input text</h3>
-      <p>input text input text input text input text.</p>
+      <h3>Built to return to soil</h3>
+      <p>Both fibers biodegrade completely — lyocell within months, latex through natural composting — closing the loop.</p>
     </div>
   </section>
 
   <section class="story">
-    <!-- image slot 2: swap in "2.png" once the file is ready, same folder as this HTML -->
     <div class="story-img img-slot">
-      <img src="2.png" alt="input image 2" onerror="this.style.display='none'">
-      <div class="slot-label">input text · 2.png</div>
+      <img src="assets/2.png" alt="Natural latex material" onerror="this.style.display='none'">
     </div>
     <div class="story-text">
-      <div class="eyebrow">input text</div>
-      <h2>input text <span class="accent-word">input text</span></h2>
-      <p>input text input text input text input text input text input text input text input text input text input text input text input text.</p>
-      <p>input text input text input text input text input text input text input text input text input text input text.</p>
+      <div class="eyebrow">The problem</div>
+      <h2>Fast fashion's <span class="accent-word">$400 billion</span> waste problem</h2>
+      <p>Textile consumption has doubled in two decades, yet two-thirds of what's produced ends up in landfill. Most of it is synthetic — fibers that take decades to break down and blends that can't be separated for recycling.</p>
+      <p>Elastane and spandex make garments stretch, but they're engineered to snap back to one fixed shape and can't be pulled apart from the fabric they're woven into. We build stretch differently, from fibers that flex, absorb, and decompose on their own terms.</p>
+    </div>
+  </section>
+
+  <section class="gallery-duo">
+    <div class="img-slot">
+      <img src="assets/3.png" alt="" onerror="this.style.display='none'">
+    </div>
+    <div class="img-slot">
+      <img src="assets/4.png" alt="" onerror="this.style.display='none'">
     </div>
   </section>
 
   <section class="stages">
     <div class="stages-head">
-      <h2>input text, <span class="accent-word">input text</span></h2>
-      <p>input text input text input text input text input text input text input text.</p>
+      <h2>From fiber, to wear, to <span class="accent-word leaf">soil</span></h2>
+      <p>Three stages built into the fabric itself, so the garment's end of life is designed in from the start.</p>
     </div>
     <div class="stage-track">
       <div class="stage">
-        <span class="num">input text</span>
-        <h3>input text</h3>
-        <p>input text input text input text input text.</p>
+        <span class="num">01 — Source</span>
+        <h3>Wood pulp & tree sap</h3>
+        <p>Lyocell is spun from FSC-certified wood pulp in a closed-loop process; natural latex is tapped from trees, not synthesized.</p>
       </div>
       <div class="stage">
-        <span class="num">input text</span>
-        <h3>input text</h3>
-        <p>input text input text input text input text.</p>
+        <span class="num">02 — Wear</span>
+        <h3>Stretch, breathe, recover</h3>
+        <p>Moisture-wicking lyocell and elastic natural rubber move with the body and hold their shape through years of use.</p>
       </div>
       <div class="stage">
-        <span class="num">input text</span>
-        <h3>input text</h3>
-        <p>input text input text input text input text.</p>
+        <span class="num">03 — Return</span>
+        <h3>Fully biodegradable</h3>
+        <p>At the end of its life, the fabric composts naturally — no microplastics released, no residue left in landfill.</p>
       </div>
     </div>
   </section>
 
   <footer>
     <div>
-      <div class="logo">Continue<span> to Grow</span></div>
-      <p style="font-size:12px;color:var(--muted);margin-top:14px;max-width:220px;">input text input text input text.</p>
+      <div class="brand">
+        <img class="brand-logo" src="assets/logo.png" alt="Continue to Grow logo" onerror="this.style.display='none'">
+        <div class="logo">Continue<span> to Grow</span></div>
+      </div>
+      <p style="font-size:12px;color:var(--muted);margin-top:14px;max-width:220px;">Adaptive, biodegradable clothing built to return to the earth.</p>
     </div>
     <div class="footer-cols">
       <div class="footer-col">
-        <h4>input text</h4>
-        <a href="#">input text</a>
-        <a href="#">input text</a>
-        <a href="#">input text</a>
+        <h4>Materials</h4>
+        <a href="#">Lyocell</a>
+        <a href="#">Natural Latex</a>
+        <a href="#">Our Process</a>
       </div>
       <div class="footer-col">
-        <h4>input text</h4>
-        <a href="#">input text</a>
-        <a href="#">input text</a>
-        <a href="#">input text</a>
+        <h4>Company</h4>
+        <a href="#">About</a>
+        <a href="#">Journal</a>
+        <a href="#">Contact</a>
       </div>
       <div class="footer-col">
-        <h4>input text</h4>
-        <a href="#">input text</a>
-        <a href="#">input text</a>
-        <a href="#">input text</a>
+        <h4>Connect</h4>
+        <a href="#">Instagram</a>
+        <a href="#">Email</a>
+        <a href="#">Newsletter</a>
       </div>
     </div>
   </footer>
-  <div class="footer-bottom">© 2026 Continue to Grow · input text</div>
+  <div class="footer-bottom">© 2026 Continue to Grow · Materials that grow, move, and return.</div>
 
 </body>
 </html>
