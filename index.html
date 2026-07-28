@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -49,7 +49,6 @@
     width:100%;height:100%;object-fit:cover;display:block;
   }
 
-  /* two-up image band, no captions */
   .gallery-duo{
     display:grid;
     grid-template-columns:1fr 1fr;
@@ -348,10 +347,10 @@
       <div class="logo">Continue<span> to Grow</span></div>
     </div>
     <div class="nav-links">
-      <a href="#">Materials</a>
-      <a href="#">Process</a>
+      <a href="materials.html">Materials</a>
+      <a href="index.html#story">Process</a>
       <a href="#">Journal</a>
-      <a href="#">Contact</a>
+      <a href="index.html#contact">Contact</a>
     </div>
     <div class="nav-icons">
       <span>⌕</span>
@@ -365,8 +364,8 @@
       <h1 class="hero-title">Fabric that adapts to you, and <span class="accent-word">gives back</span> to the earth</h1>
       <p class="hero-copy">We replace spandex and elastane with lyocell and natural tree rubber — fibers that stretch to fit the body, hold their shape for years, and fully biodegrade at the end of their life.</p>
       <div class="hero-actions">
-        <button class="btn">Explore the materials</button>
-        <button class="btn btn-ghost">How it works →</button>
+        <a href="materials.html" class="btn">Explore the materials</a>
+        <a href="#story" class="btn btn-ghost">How it works →</a>
       </div>
     </div>
     <div class="hero-visual img-slot">
@@ -393,7 +392,7 @@
     </div>
   </section>
 
-  <section class="story">
+  <section class="story" id="story">
     <div class="story-img img-slot">
       <img src="assets/2.png" alt="Natural latex material" onerror="this.style.display='none'">
     </div>
@@ -438,7 +437,7 @@
     </div>
   </section>
 
-  <footer>
+  <footer id="contact">
     <div>
       <div class="brand">
         <img class="brand-logo" src="assets/logo.png" alt="Continue to Grow logo" onerror="this.style.display='none'">
@@ -449,8 +448,8 @@
     <div class="footer-cols">
       <div class="footer-col">
         <h4>Materials</h4>
-        <a href="#">Lyocell</a>
-        <a href="#">Natural Latex</a>
+        <a href="materials.html">Lyocell</a>
+        <a href="materials.html">Natural Latex</a>
         <a href="#">Our Process</a>
       </div>
       <div class="footer-col">

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prototype · Continue to Grow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F3EFE4;
+    --paper:#FBF8F1;
+    --ink:#1E1F1A;
+    --olive:#767A5E;
+    --olive-dark:#565943;
+    --yellow:#F0B429;
+    --line: rgba(30,31,26,0.12);
+    --muted:#6D6C61;
+    --placeholder-bg:#E7E2D3;
+    --placeholder-border:#B7B097;
+    --leaf:#5E8C61;
+    --leaf-dark:#3B5E40;
+    --leaf-tint:#E4EBDD;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .voice{font-family:'Fraunces',serif;}
+  a{color:inherit;text-decoration:none;}
+
+  .grow-bar{
+    height:4px;
+    width:100%;
+    background:linear-gradient(90deg, var(--leaf-dark), var(--leaf) 45%, var(--yellow));
+  }
+
+  .img-slot{
+    position:relative;
+    overflow:hidden;
+    background:var(--placeholder-bg);
+  }
+  .img-slot img{
+    width:100%;height:100%;object-fit:cover;display:block;
+  }
+
+  .accent-word{
+    position:relative;
+    display:inline-block;
+    padding:0 0.15em;
+    isolation:isolate;
+  }
+  .accent-word::before{
+    content:'';
+    position:absolute;
+    top:50%;left:50%;
+    width:111%;
+    height:118%;
+    transform:translate(-50%,-50%);
+    background:linear-gradient(135deg,rgba(159,197,132,0.42),rgba(94,140,97,0.42));
+    border-radius:50%;
+    z-index:-1;
+  }
+  .accent-word.leaf::before{
+    background:var(--leaf-tint);
+    border:1.5px solid var(--leaf);
+    box-shadow:none;
+  }
+
+  .meta-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 48px;
+    border-bottom:1px solid var(--line);
+    font-size:12px;
+    letter-spacing:0.04em;
+    color:var(--muted);
+  }
+
+  nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:22px 48px;
+    border-bottom:1px solid var(--line);
+  }
+  .brand{
+    display:inline-flex;
+    align-items:center;
+    gap:12px;
+    cursor:pointer;
+    text-decoration:none;
+    color:inherit;
+    pointer-events:auto;
+  }
+  .brand-logo{
+    height:46px;
+    width:auto;
+    object-fit:contain;
+    flex-shrink:0;
+  }
+  .logo{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:22px;
+    letter-spacing:0.02em;
+  }
+  .logo span{color:var(--olive);font-style:italic;}
+  .nav-links{
+    display:flex;
+    gap:36px;
+    font-size:13px;
+    letter-spacing:0.03em;
+    color:var(--muted);
+  }
+  .nav-links a{transition:color .2s ease;}
+  .nav-links a:hover{color:var(--leaf-dark);}
+  .nav-links a.active{color:var(--leaf-dark);}
+  .nav-icons{display:flex;gap:20px;font-size:15px;color:var(--ink);}
+
+  .eyebrow{
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--leaf-dark);
+    font-weight:600;
+    margin-bottom:18px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .eyebrow::before{
+    content:'';
+    width:6px;height:6px;
+    border-radius:50%;
+    background:var(--leaf);
+    display:inline-block;
+  }
+
+  .page-head{
+    padding:64px 48px 40px;
+    max-width:640px;
+  }
+  .page-head h1{
+    font-family:'Fraunces',serif;
+    font-weight:700;
+    font-size:52px;
+    line-height:1.15;
+    letter-spacing:-0.01em;
+  }
+  .page-head p{
+    margin-top:20px;
+    color:var(--muted);
+    font-size:16px;
+    max-width:480px;
+  }
+
+  .feature-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:48px;
+    align-items:center;
+    padding:36px 48px;
+    border-top:1px solid var(--line);
+  }
+  .feature-row.reverse .feature-img{
+    order:2;
+  }
+  .feature-row.reverse .feature-text{
+    order:1;
+  }
+  .feature-row:last-of-type{border-bottom:1px solid var(--line);}
+  
+  .feature-img{
+    border-radius:4px;
+    width:100%;
+  }
+  .feature-img.img-51{ aspect-ratio: 633 / 454; }
+  .feature-img.img-52{ aspect-ratio: 633 / 335; }
+  .feature-img.img-53{ aspect-ratio: 633 / 340; }
+  .feature-img.img-61{ aspect-ratio: 595 / 424; }
+  .feature-img.img-62{ aspect-ratio: 598 / 319; }
+  .feature-img.img-63{ aspect-ratio: 594 / 321; }
+  .feature-img.img-7{ aspect-ratio: 4 / 5; }
+
+  .feature-text{
+    padding:16px 8px;
+  }
+  .feature-text .num{
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    color:var(--leaf-dark);
+    font-size:14px;
+    margin-bottom:10px;
+    display:block;
+  }
+  .feature-text h3{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:22px;
+    line-height:1.3;
+    margin-bottom:10px;
+  }
+  .feature-text p{
+    font-size:14px;
+    color:var(--muted);
+    max-width:420px;
+    line-height:1.5;
+  }
+
+  footer{
+    border-top:1px solid var(--line);
+    padding:48px 48px 32px;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    background:var(--paper);
+  }
+  .footer-cols{display:flex;gap:64px;}
+  .footer-col h4{font-size:12px;letter-spacing:0.05em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;}
+  .footer-col a{display:block;font-size:13px;margin-bottom:9px;color:var(--ink);transition:color .2s ease;}
+  .footer-col a:hover{color:var(--leaf-dark);}
+  .footer-bottom{
+    text-align:center;
+    font-size:12px;
+    color:var(--muted);
+    padding-top:32px;
+    border-top:1px solid var(--line);
+    margin-top:16px;
+  }
+
+  @media (max-width: 860px){
+    .meta-row{padding:14px 20px;flex-wrap:wrap;gap:8px;}
+    nav{padding:18px 20px;flex-wrap:wrap;gap:14px;}
+    .nav-links{display:none;}
+    .page-head{padding:48px 20px 32px;}
+    .page-head h1{font-size:36px;}
+    .feature-row, .feature-row.reverse{grid-template-columns:1fr;padding:28px 20px;gap:20px;}
+    .feature-row.reverse .feature-img{order:initial;}
+    .feature-row.reverse .feature-text{order:initial;}
+    footer{flex-direction:column;gap:32px;padding:40px 20px;}
+  }
+</style>
+</head>
+<body>
+
+  <div class="grow-bar"></div>
+
+  <div class="meta-row">
+    <span>Adaptive Fiber Lab</span>
+    <span>Est. 2026</span>
+  </div>
+
+  <nav>
+    <a href="index.html" class="brand">
+      <img class="brand-logo" src="assets/logo.png" alt="Continue to Grow logo" onerror="this.style.display='none'">
+      <div class="logo">Continue<span> to Grow</span></div>
+    </a>
+    <div class="nav-links">
+      <a href="materials.html" class="active">Materials</a>
+      <a href="index.html#story">Process</a>
+      <a href="#">Journal</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+    <div class="nav-icons">
+      <span>⌕</span>
+      <span>◫</span>
+    </div>
+  </nav>
+
+  <section class="page-head">
+    <div class="eyebrow">Explore the Materials</div>
+    <h1>Prototype & Science</h1>
+    <p>Discover our geometric fabric revolution: utilizing auxetic principles and plant-based structural elements to redefine stretch, strength, and durability in apparel.</p>
+  </section>
+
+  <section class="feature-row">
+    <div class="feature-img img-51 img-slot">
+      <img src="assets/51.png" alt="Auxetic Geometry Mechanics" onerror="this.style.display='none'">
+    </div>
+    <div class="feature-text">
+      <span class="num">01 — Structural Mechanics</span>
+      <h3>Auxetic Geometry & Lateral Expansion</h3>
+      <p>Under longitudinal tension, the geometric lattice expands laterally by +26% width, providing adaptive volume without fiber necking.</p>
+    </div>
+  </section>
+
+  <section class="feature-row reverse">
+    <div class="feature-img img-52 img-slot">
+      <img src="assets/52.png" alt="Rotating Panels & Hinges" onerror="this.style.display='none'">
+    </div>
+    <div class="feature-text">
+      <span class="num">02 — Smart Internal Design</span>
+      <h3>Rotating Panels & Tensile Strength</h3>
+      <p>Corner-connected rigid squares rotate freely under strain, backed by high-tenacity lyocell fibers reaching 38–40 cN/tex strength.</p>
+    </div>
+  </section>
+
+  <section class="feature-row">
+    <div class="feature-img img-53 img-slot">
+      <img src="assets/53.png" alt="Biodegradable Profile" onerror="this.style.display='none'">
+    </div>
+    <div class="feature-text">
+      <span class="num">03 — Material Integrity</span>
+      <h3>Sustainable Closed-Loop Profile</h3>
+      <p>Engineered from FSC-certified lyocell and natural rubber, offering 100% plant-based compostability within months of end-of-life.</p>
+    </div>
+  </section>
+
+  <section class="feature-row reverse">
+    <div class="feature-img img-61 img-slot">
+      <img src="assets/61.png" alt="Tensile Reinforcement" onerror="this.style.display='none'">
+    </div>
+    <div class="feature-text">
+      <span class="num">04 — Stress Distribution</span>
+      <h3>Targeted Tensile Reinforcement</h3>
+      <p>Reinforced geometric grids absorb up to 98% of dynamic movement stress, preserving structural alignment across high-impact body zones.</p>
+    </div>
+  </section>
+
+  <section class="feature-row">
+    <div class="feature-img img-62 img-slot">
+      <img src="assets/62.png" alt="Reversible Elasticity" onerror="this.style.display='none'">
+    </div>
+    <div class="feature-text">
+      <span class="num">05 — Elastic Memory</span>
+      <h3>Reversible Elastic Memory</h3>
+      <p>Natural latex hinges retain shape memory through 5,000+ extension cycles, replacing petroleum-derived elastane blends seamlessly.</p>
+    </div>
+  </section>
+
+  <section class="feature-row reverse">
+    <div class="feature-img img-63 img-slot">
+      <img src="assets/63.png" alt="Micro-Mesh Airflow" onerror="this.style.display='none'">
+    </div>
+    <div class="feature-text">
+      <span class="num">06 — Ventilation</span>
+      <h3>Micro-Mesh & Breathability</h3>
+      <p>Dynamic geometric openings widen during active motion, boosting airflow permeability by 45% for superior moisture control.</p>
+    </div>
+  </section>
+
+  <section class="feature-row">
+    <div class="feature-img img-7 img-slot">
+      <img src="assets/7.png" alt="Performance Integration" onerror="this.style.display='none'">
+    </div>
+    <div class="feature-text">
+      <span class="num">07 — Performance Integration</span>
+      <h3>Engineered for Demanding Performance</h3>
+      <p>Integrating geometric textiles into real performance wear: articulated back stretch grids, shoulder flex zones, and multi-joint sleeve freedom for active movement.</p>
+    </div>
+  </section>
+
+  <footer>
+    <div>
+      <a href="index.html" class="brand">
+        <img class="brand-logo" src="assets/logo.png" alt="Continue to Grow logo" onerror="this.style.display='none'">
+        <div class="logo">Continue<span> to Grow</span></div>
+      </a>
+      <p style="font-size:12px;color:var(--muted);margin-top:14px;max-width:220px;">Adaptive, biodegradable clothing built to return to the earth.</p>
+    </div>
+    <div class="footer-cols">
+      <div class="footer-col">
+        <h4>Materials</h4>
+        <a href="#">Lyocell</a>
+        <a href="#">Natural Latex</a>
+        <a href="#">Our Process</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="#">About</a>
+        <a href="#">Journal</a>
+        <a href="#">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <a href="#">Instagram</a>
+        <a href="#">Email</a>
+        <a href="#">Newsletter</a>
+      </div>
+    </div>
+  </footer>
+  <div class="footer-bottom">© 2026 Continue to Grow · Materials that grow, move, and return.</div>
+
+</body>
+</html>
